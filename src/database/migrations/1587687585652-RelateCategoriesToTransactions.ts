@@ -40,6 +40,7 @@ export default class RelateCategoriesToTransactions1587687585652
       new TableColumn({
         name: 'category',
         type: 'varchar',
+        isNullable: true,
       }),
     );
   }

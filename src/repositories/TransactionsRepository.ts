@@ -16,7 +16,8 @@ class TransactionsRepository extends Repository<Transaction> {
       (balance, transaction: Transaction) => {
         return {
           ...balance,
-          [transaction.type]: balance[transaction.type] + transaction.value,
+          [transaction.type]:
+            Number(balance[transaction.type]) + Number(transaction.value),
         };
       },
       {
