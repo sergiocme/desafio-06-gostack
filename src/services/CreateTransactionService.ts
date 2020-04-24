@@ -1,6 +1,6 @@
-// import AppError from '../errors/AppError';
-
 import { getCustomRepository, getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
+
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Transaction from '../models/Transaction';
 import Category from '../models/Category';
@@ -23,14 +23,14 @@ class CreateTransactionService {
     const categoriesRepository = getRepository(Category);
 
     if (!['outcome', 'income'].includes(type)) {
-      throw new Error('Invalid transaction type');
+      throw new AppError('Invalid transaction type');
     }
 
     const { total } = await transactionsRepository.getBalance();
     const insufficientFunds = type === 'outcome' && total - value < 0;
 
     if (insufficientFunds) {
-      throw new Error('Insufficient funds');
+      throw new AppError('Insufficient funds');
     }
 
     let transactionCategory = await categoriesRepository.findOne({
